@@ -1,37 +1,37 @@
 /**
- * filter out revenue entries and add total_value to calculate revenue
- * @param  {Array} dataEntries array of data entries
+ * filter out revenue records and add total_value to calculate revenue
+ * @param  {Array} dataRecords array of data records
  * @return {Number}            calculated revenue
  */
-function revenue(dataEntries) {
-  return dataEntries
-    .filter(entry => entry.account_category === 'revenue')
-    .reduce((accumulator, entry) => entry.total_value + accumulator, 0);
+function revenue(dataRecords) {
+  return dataRecords
+    .filter(record => record.account_category === 'revenue')
+    .reduce((accumulator, record) => record.total_value + accumulator, 0);
 }
 
 /**
- * filter out expense entries and add total_value to calculate expenses
- * @param  {Array} dataEntries array of data entries
+ * filter out expense records and add total_value to calculate expenses
+ * @param  {Array} dataRecords array of data records
  * @return {Number}            calculated expenses
  */
-function expenses(dataEntries) {
-  return dataEntries
-    .filter(entry => entry.account_category === 'expense')
-    .reduce((accumulator, entry) => entry.total_value + accumulator, 0);
+function expenses(dataRecords) {
+  return dataRecords
+    .filter(record => record.account_category === 'expense')
+    .reduce((accumulator, record) => record.total_value + accumulator, 0);
 }
 
 /**
  * add sales debits and divide by revenue
- * @param  {Array} dataEntries array of data entries
+ * @param  {Array} dataRecords array of data records
  * @param  {Number} revenue     calculated revenue
  * @return {Number}             calculated gross profit margin
  */
-function grossProfitMargin(dataEntries, revenue) {
-  const salesDebits = dataEntries
+function grossProfitMargin(dataRecords, revenue) {
+  const salesDebits = dataRecords
     .filter(
-      entry => entry.account_type === 'sales' && entry.value_type === 'debit'
+      record => record.account_type === 'sales' && record.value_type === 'debit'
     )
-    .reduce((accumulator, entry) => entry.total_value + accumulator, 0);
+    .reduce((accumulator, record) => record.total_value + accumulator, 0);
   return salesDebits / revenue;
 }
 

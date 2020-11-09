@@ -19,7 +19,7 @@ describe('Calculations', () => {
   };
 
   describe('Revenue', () => {
-    test('empty', () => {
+    test('no records', () => {
       expect(calc.revenue([])).toEqual(0);
     });
     test('single record', () => {
@@ -37,7 +37,7 @@ describe('Calculations', () => {
   });
 
   describe('Expenses', () => {
-    test('empty', () => {
+    test('no records', () => {
       expect(calc.expenses([])).toEqual(0);
     });
     test('single record', () => {
@@ -67,7 +67,7 @@ describe('Calculations', () => {
       value_type: 'credit',
       total_value: 1,
     };
-    test('empty', () => {
+    test('no records', () => {
       expect(calc.grossProfitMargin([], 1)).toBeCloseTo(0);
     });
     test('single sales debit', () => {
