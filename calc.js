@@ -35,8 +35,19 @@ function grossProfitMargin(dataEntries, revenue) {
   return salesDebits / revenue;
 }
 
+/**
+ * calculates net profit margin from revenue and expenses
+ * @param  {Number} revenue  calculated revenue
+ * @param  {Number} expenses calculated expenses
+ * @return {Number}          calculated net profit margin
+ */
+function netProfitMargin(revenue, expenses) {
+  return (revenue - expenses) / revenue;
+}
+
 module.exports = {
   revenue,
   expenses,
   grossProfitMargin,
+  netProfitMargin,
 };

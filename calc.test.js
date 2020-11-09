@@ -102,4 +102,23 @@ describe('Calculations', () => {
       );
     });
   });
+
+  describe('Net Profit Margin', () => {
+    test.each([
+      [2, 1, 0.5],
+      [2, 3, -0.5],
+      [4, 4, 0],
+      [3, 0, 1],
+    ])('Revenue: %i, Expenses: %i', (revenue, expenses, expectedMargin) => {
+      expect(calc.netProfitMargin(revenue, expenses)).toBeCloseTo(
+        expectedMargin
+      );
+    });
+    test.each([
+      [0, 0, NaN],
+      [0, 3, -Infinity],
+    ])('Revenue: %i, Expenses: %i', (revenue, expenses, expectedMargin) => {
+      expect(calc.netProfitMargin(revenue, expenses)).toEqual(expectedMargin);
+    });
+  });
 });
