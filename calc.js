@@ -48,9 +48,38 @@ function netProfitMargin(revenue, expenses) {
   return (revenue - expenses) / revenue;
 }
 
+function workingCapitalRatio(dataRecords) {
+  const isAsset = record =>
+    record.account_category === 'assets' &&
+    ['current', 'bank', 'current_accounts_receivable'].includes(
+      record.account_type
+    );
+  const assetDebits = dataRecords
+    .filter(record => isAsset(record) && record.value_type === 'debit')
+    .reduce(totalValueSumAccumulator, 0);
+  const assetCredits = dataRecords
+    .filter(record => isAsset(record) && record.value_type === 'credit')
+    .reduce(totalValueSumAccumulator, 0);
+  const assets = assetDebits - assetCredits;
+
+  const isLiability = record =>
+    record.account_category === 'liability' &&
+    ['current', 'current_accounts_payable'].includes(record.account_type);
+  const liabilityDebits = dataRecords
+    .filter(record => isLiability(record) && record.value_type === 'debit')
+    .reduce(totalValueSumAccumulator, 0);
+  const liabilityCredits = dataRecords
+    .filter(record => isLiability(record) && record.value_type === 'credit')
+    .reduce(totalValueSumAccumulator, 0);
+  const liabilities = liabilityDebits - liabilityCredits;
+
+  return assets / liabilities;
+}
+
 module.exports = {
   revenue,
   expenses,
   grossProfitMargin,
   netProfitMargin,
+  workingCapitalRatio,
 };

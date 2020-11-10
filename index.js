@@ -23,3 +23,7 @@ console.log(
   'Net Profit Margin: %s%%',
   percentFormat.format(100 * calc.netProfitMargin(revenue, expenses))
 );
+console.log(
+  'Working Capital Ratio: %s%%',
+  percentFormat.format(100 * calc.workingCapitalRatio(data.data))
+);
