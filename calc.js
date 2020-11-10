@@ -1,3 +1,6 @@
+const totalValueSumAccumulator = (accumulator, record) =>
+  record.total_value + accumulator;
+
 /**
  * filter out revenue records and add total_value to calculate revenue
  * @param  {Array} dataRecords array of data records
@@ -6,7 +9,7 @@
 function revenue(dataRecords) {
   return dataRecords
     .filter(record => record.account_category === 'revenue')
-    .reduce((accumulator, record) => record.total_value + accumulator, 0);
+    .reduce(totalValueSumAccumulator, 0);
 }
 
 /**
@@ -17,7 +20,7 @@ function revenue(dataRecords) {
 function expenses(dataRecords) {
   return dataRecords
     .filter(record => record.account_category === 'expense')
-    .reduce((accumulator, record) => record.total_value + accumulator, 0);
+    .reduce(totalValueSumAccumulator, 0);
 }
 
 /**
@@ -31,7 +34,7 @@ function grossProfitMargin(dataRecords, revenue) {
     .filter(
       record => record.account_type === 'sales' && record.value_type === 'debit'
     )
-    .reduce((accumulator, record) => record.total_value + accumulator, 0);
+    .reduce(totalValueSumAccumulator, 0);
   return salesDebits / revenue;
 }
 
