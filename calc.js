@@ -48,7 +48,12 @@ function netProfitMargin(revenue, expenses) {
   return (revenue - expenses) / revenue;
 }
 
-function workingCapitalRatio(dataRecords) {
+/**
+ * calculates net assets (debits minus credits)
+ * @param  {Array} dataRecords array of data records
+ * @return {Number}             net assets
+ */
+function netAssets(dataRecords) {
   const isAsset = record =>
     record.account_category === 'assets' &&
     ['current', 'bank', 'current_accounts_receivable'].includes(
@@ -60,8 +65,10 @@ function workingCapitalRatio(dataRecords) {
   const assetCredits = dataRecords
     .filter(record => isAsset(record) && record.value_type === 'credit')
     .reduce(totalValueSumAccumulator, 0);
-  const assets = assetDebits - assetCredits;
+  return assetDebits - assetCredits;
+}
 
+function netLiabilities(dataRecords) {
   const isLiability = record =>
     record.account_category === 'liability' &&
     ['current', 'current_accounts_payable'].includes(record.account_type);
@@ -71,7 +78,17 @@ function workingCapitalRatio(dataRecords) {
   const liabilityCredits = dataRecords
     .filter(record => isLiability(record) && record.value_type === 'credit')
     .reduce(totalValueSumAccumulator, 0);
-  const liabilities = liabilityDebits - liabilityCredits;
+  return liabilityDebits - liabilityCredits;
+}
+
+/**
+ * calculates working capital ratio
+ * @param  {Array} dataRecords array of data records
+ * @return {number}             calculated working capital ratio
+ */
+function workingCapitalRatio(dataRecords) {
+  const assets = netAssets(dataRecords);
+  const liabilities = netLiabilities(dataRecords);
 
   return assets / liabilities;
 }
@@ -82,4 +99,6 @@ module.exports = {
   grossProfitMargin,
   netProfitMargin,
   workingCapitalRatio,
+  netAssets,
+  netLiabilities,
 };
