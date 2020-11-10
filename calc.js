@@ -68,6 +68,11 @@ function netAssets(dataRecords) {
   return assetDebits - assetCredits;
 }
 
+/**
+ * calculates net liabilities (debits minus credits)
+ * @param  {Array} dataRecords array of data records
+ * @return {Number}             net liabilities
+ */
 function netLiabilities(dataRecords) {
   const isLiability = record =>
     record.account_category === 'liability' &&
